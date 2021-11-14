@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-LABEL maintainer="Letícia Maria Pequeno Madureira <lmadurei@andrew.cmu.edu>
+LABEL maintainer="Letícia Maria Pequeno Madureira <lmadurei@andrew.cmu.edu>"
 
 # arguments
 
@@ -15,13 +15,18 @@ WORKDIR $PREFIX
 
 RUN apt update && \
     apt upgrade --yes && \
-
     apt install --yes openmpi-bin && \
     apt install --yes vim && \
-
     apt install --yes wget && \
     wget $URL -O orca.tar.zst && \
-    
     apt install --yes zstd && \
     tar -I zstd -xvf orca.tar.zst && \
-    mv $
+    mv $NAME orca && \
+    rm orca.tar.zst && \
+    rm -rf /var/lib/apt/lists/* && \
+    useradd --create-home --shell /bin/bash $USER && \
+    echo export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PREFIX/orca" >> /home/$USER/.bashrc && \
+    echo export OMPI_MCA_btl_vader_single_copy_mechanism=none >> /home/$USER/.bashrc
+
+USER $USER
+WORKDIR /home/$USER
