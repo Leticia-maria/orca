@@ -14,7 +14,6 @@ WORKDIR $PREFIX
 
 RUN apt update && \
     apt upgrade --yes && \
-    apt install --yes build-essential && \
     apt install --yes vim && \
     apt install --yes wget
 # openmpi installation
