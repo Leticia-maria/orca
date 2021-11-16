@@ -6,9 +6,9 @@
 name: Create and publish a Docker image
 
 on:
-   push:
+  push:
         branches: [ master ]
-    pull_request:
+  pull_request:
         branches: [ master ]
 
 env:
