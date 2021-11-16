@@ -26,6 +26,7 @@ jobs:
         name: Inspect
         run: |
           docker image inspect myimage:latest
+          docker login
       -
         name: Login to DockerHub
         uses: docker/login-action@v1
