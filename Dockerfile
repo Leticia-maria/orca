@@ -14,8 +14,7 @@ WORKDIR $PREFIX
 
 RUN apt update && \
     apt upgrade --yes && \
-    apt install --yes vim && \
-    apt install --yes wget
+    apt install --yes vim
 # openmpi installation
 # WORKDIR /tmp
 # RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
