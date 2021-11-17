@@ -42,4 +42,4 @@ jobs:
                 done
     - name: Docker Push
       run: |
-         docker push $DOCKER_USER/"$d"
+         docker push $DOCKER_USER/"$rootdir"
