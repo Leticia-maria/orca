@@ -21,7 +21,24 @@ jobs:
       run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USERNAME}}/orcatest:latest
-
+      run: |
+          rootdir="$(pwd)"
+                built="$rootdir/done.txt"
+                touch "$built"
+                for d in $(ls | sort -h -r); do
+                    if [ -d "$d" ]; then
+                        cd "$d"
+                        program=$(echo "$d" | cut -d: -f 1)
+                        if ! grep -Fxq "$program" "$built"; then
+                            # No version built yet
+                            if [ -f Dockerfile ]; then
+                                # The directory name *is* the tag and version
+                                docker build . --file Dockerfile --tag "$d"
+                            fi
+                            echo "$program" >> "$built"
+                        fi
+                        cd "$rootdir"
+                    fi
+                done
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USERNAME}}/orcatest
+      run: docker push ${{secrets.DOCKER_USERNAME}}/$d
