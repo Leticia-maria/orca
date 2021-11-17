@@ -21,6 +21,6 @@ jobs:
       run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag leticiamaria/orcatest:$(date +%s)
+      run: docker build . --file Dockerfile --tag leticiamaria/orca:$(date +%s)
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USERNAME}}/YOUR_DOCKER_HUB_REPO_NAME
+      run: docker push ${{secrets.DOCKER_USERNAME}}/orca:$(date +%s)
