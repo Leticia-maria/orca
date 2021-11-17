@@ -24,7 +24,7 @@ jobs:
       run: |
           rootdir="$(pwd)"
                 built="$rootdir/done.txt"
-                echo built
+                echo "$built"
                 touch "$built"
                 for d in $(ls | sort -h -r); do
                     if [ -d "$d" ]; then
@@ -35,7 +35,6 @@ jobs:
                             if [ -f Dockerfile ]; then
                                 # The directory name *is* the tag and version
                                 docker build . --file Dockerfile --tag "$d"
-                                echo "$d"
                             fi
                             echo "$program" >> "$built"
                         fi
