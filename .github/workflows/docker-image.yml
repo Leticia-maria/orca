@@ -23,6 +23,7 @@ jobs:
     - name: Build the Docker image
       run: |
           rootdir="$(pwd)"
+                pwd
                 built="$rootdir/done.txt"
                 touch "$built"
                 for d in $(ls | sort -h -r); do
@@ -41,4 +42,6 @@ jobs:
                     fi
                 done
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USERNAME}}/$rootdir
+      run: | 
+          docker push $DOCKER_USER/$rootdir
+      
