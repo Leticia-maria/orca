@@ -41,5 +41,4 @@ jobs:
                     fi
                 done
     - name: Docker Push
-      run: |
-         docker push $DOCKER_USER/"$rootdir"
+      run: docker push ${{secrets.DOCKER_USERNAME}}/
