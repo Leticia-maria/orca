@@ -26,5 +26,6 @@ jobs:
                                 # The directory name *is* the tag and version
                                 echo $d
                             fi
+                        fi
                     fi
                 done
