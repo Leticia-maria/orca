@@ -16,4 +16,5 @@ jobs:
               run: |
                 rootdir="$(pwd)"
                 echo $rootdir
-                ls
+                cd 5.0.1
+                docker build
