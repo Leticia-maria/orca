@@ -15,7 +15,8 @@ jobs:
               run: |
                 rootdir="$(pwd)"
                 for d in $(ls | sort -h -r); do
-                    echo $d
-                    cd $d
-                    ls
+                    if [ -d "$d" ]; then
+                        cd "$d"
+                        program=$(echo "$d" | cut -d: -f 1)
+                        echo $program
                 done
