@@ -16,3 +16,6 @@ jobs:
               run: |
                 rootdir="$(pwd)"
                 echo $rootdir
+                cd ..
+                now="$(pwd)"
+                echo $now
