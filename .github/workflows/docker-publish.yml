@@ -11,6 +11,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            - name: Log into GitHub Container Registry
+              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin ghcr.io
+            - name: Repository owner needs to be lowercase
+              id: repo-owner
+              run: |
+                REPO_OWNER=${{ github.repository_owner }}
+                echo "::set-output name=repo-owner::${REPO_OWNER,,}"
             - name: Build all Docker images
               run: |
                 rootdir="$(pwd)"
@@ -25,7 +32,7 @@ jobs:
                             if [ -f Dockerfile ]; then
                                 # The directory name *is* the tag and version
                                 echo $d
-                                docker build --tag ghcr.io/${{ github.actor }}/$d .
+                                docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d .
                             fi
                         fi
                     fi
