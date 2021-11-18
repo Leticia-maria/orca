@@ -17,4 +17,25 @@ jobs:
                 rootdir="$(pwd)"
                 echo $rootdir
                 cd 5.0.1
-                docker build
+                
+name: Docker Image CI
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build all Docker images
+              run: |
+                rootdir="$(pwd)"
+                built="$rootdir/done.txt"
+                touch "$built"
+                for d in $(ls | sort -h -r); do
+                    echo $d
+                done
