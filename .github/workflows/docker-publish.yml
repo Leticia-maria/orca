@@ -7,8 +7,9 @@ on:
         branches: [ master ]
 
 jobs:
-    build:
+    push:
         runs-on: ubuntu-latest
+        if: github.event_name != 'pull_request'
         steps:
             - uses: actions/checkout@v2
             - name: Log into GitHub Container Registry
@@ -33,10 +34,8 @@ jobs:
                                 # The directory name *is* the tag and version
                                 echo $d
                                 docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d .
+                                docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d
                             fi
                         fi
                     fi
                 done
-            - name: Push image to GitHub Container Registry
-              run: |
-                docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d
