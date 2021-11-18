@@ -16,4 +16,6 @@ jobs:
                 rootdir="$(pwd)"
                 for d in $(ls | sort -h -r); do
                     echo $d
+                    cd $d
+                    ls
                 done
