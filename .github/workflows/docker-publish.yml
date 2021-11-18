@@ -25,6 +25,7 @@ jobs:
                             if [ -f Dockerfile ]; then
                                 # The directory name *is* the tag and version
                                 echo $d
+                                docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d .
                             fi
                         fi
                     fi
