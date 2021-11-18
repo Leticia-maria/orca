@@ -19,5 +19,6 @@ jobs:
                         cd "$d"
                         program=$(echo "$d" | cut -d: -f 1)
                         echo $program
+                        echo $d
                     fi
                 done
