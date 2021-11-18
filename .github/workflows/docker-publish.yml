@@ -15,5 +15,6 @@ jobs:
               run: |
                 rootdir="$(pwd)"
                 echo $rootdir
-                cd 5.0.1
-                docker build . --tag ghcr.io/leticia-maria/hello-world:latest
+                for d in $(ls | sort -h -r); do
+                    echo $d
+                done
