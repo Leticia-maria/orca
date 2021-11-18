@@ -14,7 +14,6 @@ jobs:
             - name: Build all Docker images
               run: |
                 rootdir="$(pwd)"
-                echo $rootdir
                 for d in $(ls | sort -h -r); do
                     echo $d
                 done
