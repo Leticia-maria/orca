@@ -12,8 +12,8 @@ ARG USER=leticia
 USER root
 WORKDIR $PREFIX
 
-RUN apt update
-    apt upgrade --yes
+RUN apt update && \
+    apt upgrade --yes && \
     apt install --yes vim
 # openmpi installation
 # WORKDIR /tmp
