@@ -26,13 +26,10 @@ jobs:
                     if [ -d "$d" ]; then
                         cd "$d"
                         program=$(echo "$d" | cut -d: -f 1)
-                        echo $program
-                        echo $d
                         if ! grep -Fxq "$program" "$built"; then
                             # No version built yet
                             if [ -f Dockerfile ]; then
                                 # The directory name *is* the tag and version
-                                echo $d
                                 docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d .
                                 docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d
                             fi
