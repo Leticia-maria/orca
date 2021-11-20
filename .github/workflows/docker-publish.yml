@@ -26,6 +26,9 @@ jobs:
           echo "::set-output name=repo-owner::${REPO_OWNER,,}"
       - name: Build orca image
         run: |
+          rootdir="$(pwd)"
+          built="$rootdir/done.txt"
+          touch "$built"
           for d in $(ls | sort -h -r); do
                     if [ -d "$d" ]; then
                         cd "$d"
@@ -41,7 +44,7 @@ jobs:
                         fi
                         cd "$rootdir"
                     fi
-                done
+            done
       - name: Push image to GitHub Container Registry
         run: |
           docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$IMAGE_NAME
