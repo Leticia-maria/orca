@@ -47,4 +47,4 @@ jobs:
             done
       - name: Push image to GitHub Container Registry
         run: |
-          docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$IMAGE_NAME
+          docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$rootdir
