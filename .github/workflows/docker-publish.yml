@@ -39,8 +39,8 @@ jobs:
                     fi
                 done
             - name: Push all Docker images
+              if: github.event_name != 'pull_request'
               run: |
-                if: github.event_name != 'pull_request'
                 rootdir="$(pwd)"
                 built="$rootdir/done.txt"
                 touch "$built"
