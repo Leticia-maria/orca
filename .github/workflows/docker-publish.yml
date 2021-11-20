@@ -7,7 +7,7 @@ on:
         branches: [ master ]
 
 jobs:
-    push:
+    build:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -21,6 +21,8 @@ jobs:
             - name: Build all Docker images
               run: |
                 rootdir="$(pwd)"
+                built="$rootdir/done.txt"
+                touch "$built"
                 for d in $(ls | sort -h -r); do
                     if [ -d "$d" ]; then
                         cd "$d"
@@ -31,20 +33,17 @@ jobs:
                                 # The directory name *is* the tag and version
                                 docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d .
                             fi
+                            echo "$program" >> "$built"
                         fi
+                        cd "$rootdir"
                     fi
                 done
-                
-            - name: Log into GitHub Container Registry
-              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin ghcr.io
-            - name: Repository owner needs to be lowercase
-              id: repo-owner
+            - name: Push all Docker images
               run: |
-                REPO_OWNER=${{ github.repository_owner }}
-                echo "::set-output name=repo-owner::${REPO_OWNER,,}"
-            - name: Build all Docker images
-              run: |
+                if: github.event_name != 'pull_request'
                 rootdir="$(pwd)"
+                built="$rootdir/done.txt"
+                touch "$built"
                 for d in $(ls | sort -h -r); do
                     if [ -d "$d" ]; then
                         cd "$d"
@@ -55,6 +54,8 @@ jobs:
                                 # The directory name *is* the tag and version
                                 docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d
                             fi
+                            echo "$program" >> "$built"
                         fi
+                        cd "$rootdir"
                     fi
                 done
