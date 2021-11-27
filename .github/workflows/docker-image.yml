@@ -7,12 +7,23 @@ on:
         branches: [ master ]
 
 jobs:
-    build:
+    push:
         runs-on: ubuntu-latest
         if: github.event_name == 'pull_request'
         steps:
-            - uses: actions/checkout@v2
-            - name: Build Updates of Pull Requests
+            - name: Build all Docker images
               run: |
-                    docker build . --file Dockerfile 
-           
+                rootdir="$(pwd)"
+                for d in $(ls | sort -h -r); do
+                    if [ -d "$d" ]; then
+                        cd "$d"
+                        program=$(echo "$d" | cut -d: -f 1)
+                        if ! grep -Fxq "$program" "$built"; then
+                            # No version built yet
+                            if [ -f Dockerfile ]; then
+                                # The directory name *is* the tag and version
+                                docker build . --file Dockerfile --tag "$d"
+                            fi
+                        fi
+                    fi
+                done
