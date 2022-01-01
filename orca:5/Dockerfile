@@ -14,28 +14,28 @@ WORKDIR $PREFIX
 
 RUN apt update && \
     apt upgrade --yes && \
-    apt install --yes vim
+    apt install --yes vim \
 # openmpi installation
-# WORKDIR /tmp
-# RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
-#     tar xvf openmpi-4.1.1.tar.gz && \
-#     rm openmpi-4.1.1.tar.gz
-# WORKDIR openmpi-4.1.1
-# RUN ./configure --prefix=/opt/orca/openmpi-4.1.1 && \
-#     make all && \
-#     make install
-# # orca-5.0.1 installation
-# WORKDIR $PREFIX
-# RUN wget $URL -O orca.tar.zst && \
-#     apt install --yes zstd && \
-#     tar -I zstd -xvf orca.tar.zst && \
-#     mv $NAME orca && \
-#     rm orca.tar.zst && \
-#     rm -rf /var/lib/apt/lists/* && \
-#     useradd --create-home --shell /bin/bash $USER && \
-#     echo 'export PATH=$PREFIX/orca:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
-#     echo 'export PATH=$PREFIX/orca/openmpi-4.1.1/bin:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca/openmpi-4.1.1/lib:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
-#    /bin/bash -c "source /home/$USER/.bashrc"
+WORKDIR /tmp
+RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
+    tar xvf openmpi-4.1.1.tar.gz && \
+    rm openmpi-4.1.1.tar.gz
+WORKDIR openmpi-4.1.1
+RUN ./configure --prefix=/opt/orca/openmpi-4.1.1 && \
+    make all && \
+    make install
+# orca-5.0.1 installation
+WORKDIR $PREFIX
+RUN wget $URL -O orca.tar.zst && \
+    apt install --yes zstd && \
+    tar -I zstd -xvf orca.tar.zst && \
+    mv $NAME orca && \
+    rm orca.tar.zst && \
+    rm -rf /var/lib/apt/lists/* && \
+    useradd --create-home --shell /bin/bash $USER && \
+    echo 'export PATH=$PREFIX/orca:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
+    echo 'export PATH=$PREFIX/orca/openmpi-4.1.1/bin:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca/openmpi-4.1.1/lib:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
+   /bin/bash -c "source /home/$USER/.bashrc"
 USER $USER
 WORKDIR /home/$USER
 CMD ["tail", "-f", "/dev/null"]
