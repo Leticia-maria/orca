@@ -7,14 +7,19 @@ ARG NAME=orca_5_0_1_linux_x86-64_shared_openmpi411
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=America/Sao_Paulo
 ARG PREFIX=/opt
-ARG USER=leticia
+ARG USER=geem
 
 USER root
 WORKDIR $PREFIX
 
 RUN apt update && \
     apt upgrade --yes && \
-    apt install --yes vim
+    apt install --yes build-essential && \
+    apt install --yes vim && \
+    apt install --yes python3.8 && \
+    apt install --yes python3-pip && \
+    apt install --yes git && \
+    apt install --yes wget
 # openmpi installation
 WORKDIR /tmp
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
@@ -35,8 +40,9 @@ RUN wget $URL -O orca.tar.zst && \
     useradd --create-home --shell /bin/bash $USER && \
     echo 'export PATH=$PREFIX/orca:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
     echo 'export PATH=$PREFIX/orca/openmpi-4.1.1/bin:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca/openmpi-4.1.1/lib:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
-   /bin/bash -c "source /home/$USER/.bashrc"
+    /bin/bash -c "source /home/$USER/.bashrc"
 USER $USER
 WORKDIR /home/$USER
 CMD ["tail", "-f", "/dev/null"]
+
 
