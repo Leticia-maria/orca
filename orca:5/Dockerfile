@@ -50,7 +50,7 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64
 
 # pip install rdkit, cctk, and morfeus
 WORKDIR /tmp
-RUN pip install rdkit-pypi cctk morfeus-ml &&
+RUN pip install rdkit-pypi cctk morfeus-ml
 
 # xtb, crest, and autoDE installations with conda
 WORKDIR /tmp
