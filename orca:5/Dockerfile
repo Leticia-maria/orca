@@ -8,7 +8,7 @@ ARG NAME=orca_5_0_2_linux_x86-64_shared_openmpi411.tar.xz
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=America/New_York
 ARG PREFIX=/opt
-ARG USER=root
+ARG USER=student
 
 USER root
 WORKDIR $PREFIX
