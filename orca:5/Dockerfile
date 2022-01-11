@@ -8,6 +8,8 @@ ARG NAME=orca_5_0_2_linux_x86-64_shared_openmpi411.tar.xz
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=America/New_York
 ARG PREFIX=/opt
+ENV PATH="/root/miniconda3/bin:${PATH}"
+ARG PATH="/root/miniconda3/bin:${PATH}"
 ARG USER=student
 
 USER root
@@ -22,12 +24,10 @@ RUN apt update && \
     apt install --yes git && \
     apt install --yes wget && \
 # miniconda installation
-    wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.7.12-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh && \
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    mkdir /root/.conda && \
+    bash Miniconda3-latest-Linux-x86_64.sh -b && \
+    rm -f Miniconda3-latest-Linux-x86_64.sh
 # openmpi installation
 WORKDIR /tmp
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
