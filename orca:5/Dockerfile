@@ -20,7 +20,14 @@ RUN apt update && \
     apt install --yes python3.9 && \
     apt install --yes python3-pip && \
     apt install --yes git && \
-    apt install --yes wget
+    apt install --yes wget && \
+# miniconda installation
+    wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.7.12-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
 # openmpi installation
 WORKDIR /tmp
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
@@ -32,11 +39,10 @@ RUN ./configure --prefix=/opt/orca/openmpi-4.1.1 && \
     make install
 # orca-5.0.2 installation
 WORKDIR $PREFIX
-RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O $NAME && \
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O orca.tar.xz && \
     rm -rf /tmp/cookies.txt && \
-    tar -xvf $NAME && \
-    mv $NAME orca && \
-    rm $NAME && \
+    tar -xvf orca.tar.xz && \
+    rm  orca.tar.xz && \
     rm -rf /var/lib/apt/lists/* && \
     useradd --create-home --shell /bin/bash $USER && \
     echo 'export PATH=$PREFIX/orca:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
