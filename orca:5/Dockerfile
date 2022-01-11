@@ -32,7 +32,8 @@ RUN ./configure --prefix=/opt/orca/openmpi-4.1.1 && \
     make install
 # orca-5.0.2 installation
 WORKDIR $PREFIX
-RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O $NAME && rm -rf /tmp/cookies.txt && \
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O $NAME && \
+    rm -rf /tmp/cookies.txt && \
     tar -xvf $NAME && \
     mv $NAME orca && \
     rm $NAME && \
@@ -43,18 +44,11 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
     /bin/bash -c "source /home/$USER/.bashrc"
 
 # miniconda3 installation
-WORKDIR /tmp
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
-    bash Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
-    rm Miniconda3-py39_4.10.3-Linux-x86_64.sh
 
 # pip install rdkit, cctk, and morfeus
 WORKDIR /tmp
-RUN pip install rdkit-pypi cctk morfeus-ml
-
-# xtb, crest, and autoDE installations with conda
-WORKDIR /tmp
-RUN conda install -c conda-forge xtb crest && \
+RUN pip install rdkit-pypi cctk morfeus-ml && \
+    conda install -c conda-forge xtb && \
     conda install autode --channel conda-forge
 
 USER $USER
