@@ -39,7 +39,7 @@ RUN ./configure --prefix=/opt/orca/openmpi-4.1.1 && \
     make install
 # orca-5.0.2 installation
 WORKDIR $PREFIX
-RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=13UDgMfGPebsBENuGlmrbEhNAMwZfMYdp' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O orca.tar.xz && \
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=13UDgMfGPebsBENuGlmrbEhNAMwZfMYdp' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=13UDgMfGPebsBENuGlmrbEhNAMwZfMYdp" -O orca.tar.xz && \
     rm -rf /tmp/cookies.txt && \
     tar -xvf orca.tar.xz && \
     rm  orca.tar.xz && \
