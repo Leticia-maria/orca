@@ -50,10 +50,8 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
     tar -xvf nbo7.tar.xz && \
     rm -rf nbo7.tar.xz && \
     useradd --create-home --shell /bin/bash $USER && \
-    echo 'export PATH=$PREFIX/orca:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
-    echo 'export PATH=$PREFIX/orca/openmpi-4.1.1/bin:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca/openmpi-4.1.1/lib:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
-    /bin/bash -c "source /home/$USER/.bashrc" && \
-    /bin/bash -c "source /opt/orcainit5"
+    echo 'source /opt/orcainit5' >> /home/$USER/.bashrc && \
+    /bin/bash -c "source /home/$USER/.bashrc"
 # pip install rdkit, cctk, and morfeus
 WORKDIR /tmp
 RUN pip install rdkit-pypi cctk morfeus-ml && \
