@@ -39,12 +39,13 @@ RUN ./configure --prefix=/opt/orca-5.0.2/openmpi-4.1.1 && \
     make install
 # orca-5.0.2 installation
 WORKDIR $PREFIX
-RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O orca-5.0.2.tar.xz && \
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O orca.tar.xz && \
     rm -rf /tmp/cookies.txt && \
+    mv orca.tar.xz orca-5.0.2.tar.xz && \
     tar -xvf orca-5.0.2.tar.xz && \
     rm  orca-5.0.2.tar.xz && \
     git clone https://github.com/Leticia-maria/orca.git && \
-    mv /orca/orca:\5/orcainit5 /opt && \
+    mv /orca/orca\:5/orcainit5 /opt && \
     rm -r orca && \
     wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC" -O nbo7.tar.xz && \
     rm -rf /tmp/cookies.txt && \
@@ -56,6 +57,7 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
     echo 'export PATH=$PREFIX/orca/openmpi-4.1.1/bin:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca/openmpi-4.1.1/lib:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
     /bin/bash -c "source /home/$USER/.bashrc" && \
     /bin/bash -c "source /opt/orcainit5"
+
 
 # miniconda3 installation
 
