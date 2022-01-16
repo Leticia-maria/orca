@@ -28,7 +28,13 @@ RUN apt update && \
     mkdir /root/.conda && \
     bash Miniconda3-latest-Linux-x86_64.sh -b && \
     rm -f Miniconda3-latest-Linux-x86_64.sh
-# openmpi installation
+# orca-5.0.2 installation
+WORKDIR $PREFIX
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O orca.tar.xz && \
+    rm -rf /tmp/cookies.txt && \
+    mv orca.tar.xz orca-5.0.2.tar.xz && \
+    tar -xvf orca-5.0.2.tar.xz && \
+    rm  orca-5.0.2.tar.xz
 WORKDIR /tmp
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz && \
     tar xvf openmpi-4.1.1.tar.gz && \
@@ -36,39 +42,24 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.g
 WORKDIR /tmp/openmpi-4.1.1
 RUN ./configure --prefix=/opt/orca-5.0.2/openmpi-4.1.1 && \
     make all && \
-    make install
-# orca-5.0.2 installation
+    make install && \
+    git clone https://github.com/Leticia-maria/orca.git
 WORKDIR $PREFIX
-RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h8iz_dlh5pmLAw6SFr_g-oboFX8OncaT" -O orca.tar.xz && \
-    rm -rf /tmp/cookies.txt && \
-    mv orca.tar.xz orca-5.0.2.tar.xz && \
-    tar -xvf orca-5.0.2.tar.xz && \
-    rm  orca-5.0.2.tar.xz && \
-    git clone https://github.com/Leticia-maria/orca.git && \
-    mv /orca/orca\:5/orcainit5 /opt && \
-    rm -r orca && \
-    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC" -O nbo7.tar.xz && \
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC" -O nbo7.tar.xz && \
     rm -rf /tmp/cookies.txt && \
     tar -xvf nbo7.tar.xz && \
     rm -rf nbo7.tar.xz && \
-    rm -rf /var/lib/apt/lists/* && \
     useradd --create-home --shell /bin/bash $USER && \
     echo 'export PATH=$PREFIX/orca:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
     echo 'export PATH=$PREFIX/orca/openmpi-4.1.1/bin:$PATH; export LD_LIBRARY_PATH=$PREFIX/orca/openmpi-4.1.1/lib:$LD_LIBRARY_PATH' >> /home/$USER/.bashrc && \
-    /bin/bash -c "source /home/$USER/.bashrc" && \
-    /bin/bash -c "source /opt/orcainit5"
-
-
-# miniconda3 installation
-
+    /bin/bash -c "source /home/$USER/.bashrc"
 # pip install rdkit, cctk, and morfeus
 WORKDIR /tmp
 RUN pip install rdkit-pypi cctk morfeus-ml && \
     conda install -c conda-forge xtb && \
-    conda install autode --channel conda-forge
+    conda install autode --channel conda-forge && \
+    rm -rf /var/lib/apt/lists/*
 
 USER $USER
 WORKDIR /home/$USER
 CMD ["tail", "-f", "/dev/null"]
-
-
