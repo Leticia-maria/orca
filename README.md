@@ -39,6 +39,10 @@ docker run -t -i leticia-maria/orca:5.0.2 /bin/bash
 source /opt/orcainit5
 ```
 
+```shell
+orca
+```
+
 ### References 
 
 Please, don't forget to reference ORCA software in your paper:
