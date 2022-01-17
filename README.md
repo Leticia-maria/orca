@@ -33,4 +33,4 @@ docker pull ghcr.io/leticia-maria/orca:5.0.2
 
 Please, don't forget to reference ORCA software in your paper:
 
-[NEESE2020](https://onlinelibrary.wiley.com/doi/full/10.1002/jcc.26139)
+NEESE2020: (https://onlinelibrary.wiley.com/doi/full/10.1002/jcc.26139)
