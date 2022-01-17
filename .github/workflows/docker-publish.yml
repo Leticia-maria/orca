@@ -39,26 +39,6 @@ jobs:
                                 # The directory name *is* the tag and version
                                 IMAGE_NAME=$d
                                 docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$IMAGE_NAME .
-                            fi
-                            echo "$program" >> "$built"
-                        fi
-                        cd "$rootdir"
-                    fi
-            done
-      - name: Push image to GitHub Container Registry
-        run: |
-          rootdir="$(pwd)"
-          built="$rootdir/done.txt"
-          touch "$built"
-          for d in $(ls | sort -h -r); do
-                    if [ -d "$d" ]; then
-                        cd "$d"
-                        program=$(echo "$d" | cut -d: -f 1)
-                        if ! grep -Fxq "$program" "$built"; then
-                            # No version built yet
-                            if [ -f Dockerfile ]; then
-                                # The directory name *is* the tag and version
-                                IMAGE_NAME=$d
                                 docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$IMAGE_NAME .
                             fi
                             echo "$program" >> "$built"
