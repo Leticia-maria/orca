@@ -40,7 +40,7 @@ source /opt/orcainit5
 ```
 
 ```shell
-orca
+orca *.inp
 ```
 
 ### References 
