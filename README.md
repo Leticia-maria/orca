@@ -29,6 +29,16 @@ docker pull leticiamaria/orca:5.0.2
 docker pull ghcr.io/leticia-maria/orca:5.0.2
 ```
 
+To run inside of your computer:
+
+```shell
+docker run -t -i leticia-maria/orca:5.0.2 /bin/bash
+```
+
+```shell
+source /opt/orcainit5
+```
+
 ### References 
 
 Please, don't forget to reference ORCA software in your paper:
