@@ -1,6 +1,7 @@
 ## Dockerfile for ORCA 🐳 🐋
 
 ![3b676bf7d59310b9f6a2e10e51a56474](https://user-images.githubusercontent.com/60739184/149775497-2a6ef4f0-6784-4ac6-bb17-8f3f9670f8ce.gif)
+![example workflow](https://github.com/Leticia-maria/Orca_dockerfile/actions/workflows/docker-publish.yml/badge.svg)
 
 An automated way to install Orca software for quantum chemical calculations.
 
