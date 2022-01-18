@@ -48,5 +48,10 @@ orca *.inp
 ### References 
 
 Please, don't forget to reference ORCA software in your paper:
+### References for packages & methods
 
-NEESE2020: https://onlinelibrary.wiley.com/doi/full/10.1002/jcc.26139
+- `ORCA`: Neese, F.; Wennmohs, F.; Becker, U.; Riplinger, C. "The ORCA quantum chemistry program package", _J. Chem. Phys._ **2020**, _152_, 224108
+- `xtb`: C. Bannwarth, E. Caldeweyher, S. Ehlert, A. Hansen, P. Pracht, J. Seibert, S. Spicher, S. Grimme _WIREs Comput. Mol. Sci._, **2020**, _11_, e01493
+- `CREST`: Pracht, P.; Bohle, F.; Grimme, S. "Automated exploration of the low-energy chemical space with fast quantum chemical methods", _Phys. Chem. Chem. Phys._ **2020**, _22_, 7169
+- `autodE`: Young, T. A.; Silcock, J. J.; Sterling, A. J.; Duarte, F.; _Angew. Chem. Int. Ed._ **2021**, _60_, 4266
+- `NBO 7`: Glendening, E. D.; Landis, C. R.; Weinhold, F.; "NBO 7.0: New Vistas in Localized and Delocalized Chemical Bonding Theory," _J. Comput. Chem._ **2019**, _40_, 2234
