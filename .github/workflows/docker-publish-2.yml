@@ -58,6 +58,12 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Repository owner needs to be lowercase
+        id: repo-owner
+        run: |
+          REPO_OWNER=${{ github.repository_owner }}
+          echo "::set-output name=repo-owner::${REPO_OWNER,,}"
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
