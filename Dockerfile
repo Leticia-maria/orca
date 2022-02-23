@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu
 LABEL maintainer="Letícia Maria Pequeno Madureira <lmadurei@andrew.cmu.edu>"
 
 # arguments
@@ -17,17 +17,13 @@ WORKDIR $PREFIX
 
 RUN apt update && \
     apt upgrade --yes && \
-    apt install --yes build-essential && \
-    apt install --yes vim && \
-    apt install --yes python3.9 && \
-    apt install --yes python3-pip && \
-    apt install --yes git && \
-    apt install --yes wget && \
+    apt install --yes python3.9 python3-pip git wget && \
 # miniconda installation
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     mkdir /root/.conda && \
     bash Miniconda3-latest-Linux-x86_64.sh -b && \
-    rm -f Miniconda3-latest-Linux-x86_64.sh
+    rm -f Miniconda3-latest-Linux-x86_64.sh && \
+    rm -rf /var/lib/apt/lists/*
 # orca-5.0.2 installation
 WORKDIR $PREFIX
 RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv" -O orca-5.0.2.tar.xz && \
@@ -45,7 +41,7 @@ RUN ./configure --prefix=/opt/orca-5.0.2/openmpi-4.1.1 && \
     git clone https://github.com/Leticia-maria/orca.git
 WORKDIR $PREFIX
 RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1sYen1Pu7fiAqU5lsz87_B3mOc5jfUnOC" -O nbo7.tar.xz && \
-     wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1lNmIAg4UEe92blgJlpxF-F-R8bMa9uoU' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1lNmIAg4UEe92blgJlpxF-F-R8bMa9uoU" -O orcainit5 && \
+    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1lNmIAg4UEe92blgJlpxF-F-R8bMa9uoU' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1lNmIAg4UEe92blgJlpxF-F-R8bMa9uoU" -O orcainit5 && \
     rm -rf /tmp/cookies.txt && \
     tar -xvf nbo7.tar.xz && \
     rm -rf nbo7.tar.xz && \
@@ -55,9 +51,8 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
 # pip install rdkit, cctk, and morfeus
 WORKDIR /tmp
 RUN pip install rdkit-pypi cctk morfeus-ml && \
-    conda install -c conda-forge xtb && \
-    conda install autode --channel conda-forge && \
-    rm -rf /var/lib/apt/lists/*
+    conda install -c conda-forge xtb autode crest && \
+    apt-get remove wget
 
 USER $USER
 WORKDIR /home/$USER
