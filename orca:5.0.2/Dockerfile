@@ -1,5 +1,5 @@
 FROM ubuntu
-LABEL maintainer="Letícia Maria Pequeno Madureira <lmadurei@andrew.cmu.edu>"
+LABEL maintainer="Letícia Maria Pequeno Madureira <leticiapequeno30@gmail.com>"
 
 # arguments
 ARG URL=https://drive.google.com/file/d/1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv/view?usp=sharing
@@ -15,8 +15,7 @@ ARG USER=student
 USER root
 WORKDIR $PREFIX
 RUN apt update && \
-    apt upgrade --yes && \
-    apt install --yes python3.9 python3-pip git wget htop && \
+    apt install --yes python python3-pip git wget htop && \
 # miniconda installation
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     mkdir /root/.conda && \
