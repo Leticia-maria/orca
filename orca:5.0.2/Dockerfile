@@ -50,7 +50,7 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
 WORKDIR /tmp
 RUN pip install rdkit-pypi cctk morfeus-ml rich rich-cli && \
     conda install -c conda-forge xtb autode crest && \
-    apt-get remove wget
+    apt-get remove --yes wget
 
 USER $USER
 WORKDIR /home/$USER
