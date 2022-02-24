@@ -14,19 +14,17 @@ ARG USER=student
 
 USER root
 WORKDIR $PREFIX
-
 RUN apt update && \
     apt upgrade --yes && \
-    apt install --yes python3.9 python3-pip git wget && \
+    apt install --yes python3.9 python3-pip git wget htop && \
 # miniconda installation
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     mkdir /root/.conda && \
     bash Miniconda3-latest-Linux-x86_64.sh -b && \
     rm -f Miniconda3-latest-Linux-x86_64.sh && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
 # orca-5.0.2 installation
-WORKDIR $PREFIX
-RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv" -O orca-5.0.2.tar.xz && \
+    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1EHqm1MRe6xUBMiZRXWgJM8797zFCPwHv" -O orca-5.0.2.tar.xz && \
     rm -rf /tmp/cookies.txt && \
     tar -xvf orca-5.0.2.tar.xz && \
     rm  orca-5.0.2.tar.xz
@@ -50,7 +48,7 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
     /bin/bash -c "source /home/$USER/.bashrc"
 # pip install rdkit, cctk, and morfeus
 WORKDIR /tmp
-RUN pip install rdkit-pypi cctk morfeus-ml && \
+RUN pip install rdkit-pypi cctk morfeus-ml rich rich-cli && \
     conda install -c conda-forge xtb autode crest && \
     apt-get remove wget
 
