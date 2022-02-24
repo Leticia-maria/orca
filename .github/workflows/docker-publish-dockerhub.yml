@@ -13,7 +13,10 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Log into DockerHub
-              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin
+              run: |
+                REPO_OWNER=${{ github.repository_owner }}
+                echo "::set-output name=repo-owner::${REPO_OWNER,,}"
+                echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${REPO_OWNER,,}
             - name: Repository owner needs to be lowercase
               id: repo-owner
               run: |
