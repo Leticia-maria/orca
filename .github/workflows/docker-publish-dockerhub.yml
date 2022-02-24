@@ -16,7 +16,7 @@ jobs:
               run: |
                 REPO_OWNER=${{ github.repository_owner }}
                 echo "::set-output name=repo-owner::${REPO_OWNER,,}"
-                echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${REPO_OWNER,,}
+                echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${REPO_OWNER,,} --password-stdin
             - name: Repository owner needs to be lowercase
               id: repo-owner
               run: |
