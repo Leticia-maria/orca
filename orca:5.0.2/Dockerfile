@@ -51,6 +51,8 @@ WORKDIR /tmp
 RUN pip install rdkit-pypi cctk morfeus-ml rich rich-cli && \
     conda install -c conda-forge xtb autode crest && \
     apt-get remove --yes wget
+WORKDIR $PREFIX/orca-5.0.2
+    RUN ln -s $(which xtb) otool_xtb
 
 USER $USER
 WORKDIR /home/$USER
