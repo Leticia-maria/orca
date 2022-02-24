@@ -12,7 +12,7 @@ jobs:
         if: github.event_name != 'pull_request'
         steps:
             - uses: actions/checkout@v2
-            - name: Log into DockerHUb
+            - name: Log into DockerHub
               run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin
             - name: Repository owner needs to be lowercase
               id: repo-owner
