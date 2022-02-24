@@ -13,7 +13,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Log into DockerHUb
-              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin ghcr.io
+              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin
             - name: Repository owner needs to be lowercase
               id: repo-owner
               run: |
