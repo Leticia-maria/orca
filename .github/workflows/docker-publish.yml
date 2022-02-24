@@ -12,8 +12,8 @@ jobs:
         if: github.event_name != 'pull_request'
         steps:
             - uses: actions/checkout@v2
-            - name: Log into DockerHub
-              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin
+            - name: Log into GitHub Container Registry
+              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${GITHUB_ACTOR,,} --password-stdin ghcr.io
             - name: Repository owner needs to be lowercase
               id: repo-owner
               run: |
@@ -30,8 +30,8 @@ jobs:
                             # No version built yet
                             if [ -f Dockerfile ]; then
                                 # The directory name *is* the tag and version
-                                docker build --tag ${{ steps.repo-owner.outputs.repo-owner }}/$d .
-                                docker push ${{ steps.repo-owner.outputs.repo-owner }}/$d
+                                docker build --tag ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d .
+                                docker push ghcr.io/${{ steps.repo-owner.outputs.repo-owner }}/$d
                             fi
                         fi
                     fi
